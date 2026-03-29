@@ -11,8 +11,20 @@ const TENNIS_KEYWORDS = [
 ];
 
 function isTennisMarket(market) {
-  const text = `${market.title || ""} ${market.subtitle || ""} ${market.event_ticker || ""}`.toLowerCase();
-  return TENNIS_KEYWORDS.some((kw) => text.includes(kw));
+  const title = (market.title || "").toLowerCase();
+
+  const isMatchFormat =
+    title.includes(" vs ") ||
+    title.includes(" v ");
+
+  const isNotTeamSport =
+    !title.includes("nba") &&
+    !title.includes("nfl") &&
+    !title.includes("mlb") &&
+    !title.includes("arsenal") &&
+    !title.includes("barcelona");
+
+  return isMatchFormat && isNotTeamSport;
 }
 
 function extractPlayers(title) {
