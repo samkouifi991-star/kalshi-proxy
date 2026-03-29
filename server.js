@@ -13,18 +13,20 @@ const TENNIS_KEYWORDS = [
 function isTennisMarket(market) {
   const title = (market.title || "").toLowerCase();
 
-  const isMatchFormat =
-    title.includes(" vs ") ||
-    title.includes(" v ");
+  // tennis tournaments / keywords
+  const tennisHints =
+    title.includes("atp") ||
+    title.includes("wta") ||
+    title.includes("tennis") ||
+    title.includes("wimbledon") ||
+    title.includes("us open") ||
+    title.includes("australian open") ||
+    title.includes("roland garros");
 
-  const isNotTeamSport =
-    !title.includes("nba") &&
-    !title.includes("nfl") &&
-    !title.includes("mlb") &&
-    !title.includes("arsenal") &&
-    !title.includes("barcelona");
+  const hasPlayers =
+    title.includes(" vs ") || title.includes(" v ");
 
-  return isMatchFormat && isNotTeamSport;
+  return tennisHints || hasPlayers;
 }
 
 function extractPlayers(title) {
