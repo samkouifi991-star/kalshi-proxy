@@ -113,7 +113,7 @@ const server = http.createServer(async (req, res) => {
 
     try {
       const allMarkets = await fetchKalshiMarkets();
-      const tennisMarkets = allMarkets.filter(isTennisMarket);
+      const tennisMarkets = allMarkets;
       const structured = tennisMarkets.map(structureMarket);
 
       console.log(`[${new Date().toISOString()}] Served ${structured.length} tennis markets (scanned ${allMarkets.length})`);
