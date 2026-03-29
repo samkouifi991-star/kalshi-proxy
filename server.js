@@ -11,22 +11,24 @@ const TENNIS_KEYWORDS = [
 ];
 
 function isTennisMarket(market) {
+  const ticker = (market.ticker || "").toLowerCase();
   const title = (market.title || "").toLowerCase();
 
-  // tennis tournaments / keywords
-  const tennisHints =
-    title.includes("atp") ||
-    title.includes("wta") ||
-    title.includes("tennis") ||
-    title.includes("wimbledon") ||
-    title.includes("us open") ||
-    title.includes("australian open") ||
-    title.includes("roland garros");
+  // Only allow markets that LOOK like tennis (not multi-team junk)
+  const isNotCombo =
+    !title.includes("yes ") &&
+    !title.includes("over") &&
+    !title.includes("points") &&
+    !title.includes("runs") &&
+    !title.includes("goals");
 
-  const hasPlayers =
-    title.includes(" vs ") || title.includes(" v ");
+  // Tennis hint (very loose because Kalshi is messy)
+  const possibleTennis =
+    title.includes(" vs ") ||
+    title.includes(" v ") ||
+    ticker.includes("tennis");
 
-  return tennisHints || hasPlayers;
+  return isNotCombo && possibleTennis;
 }
 
 function extractPlayers(title) {
